@@ -1,0 +1,39 @@
+stages:
+  - lint
+  - test
+  - build-frontend
+  - simulate
+
+lint:
+  stage: lint
+  image: python:3.12-slim
+  script:
+    - pip install ruff
+    - ruff check src/ tests/
+
+test-backend:
+  stage: test
+  image: python:3.12-slim
+  script:
+    - pip install -e ".[test]"
+    - pytest tests/ -v --tb=short
+
+build-frontend:
+  stage: build-frontend
+  image: node:20-slim
+  script:
+    - cd frontend
+    - npm ci
+    - npm run build
+  artifacts:
+    paths:
+      - frontend/dist/
+    expire_in: 1 week
+
+simulate:
+  stage: simulate
+  image: python:3.12-slim
+  script:
+    - pip install -e .
+    - python scripts/run_sim.py --robots 3 --steps 500
+  allow_failure: true
