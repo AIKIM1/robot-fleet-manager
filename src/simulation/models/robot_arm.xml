@@ -1,0 +1,25 @@
+<mujoco model="robot_arm">
+  <option timestep="0.002" gravity="0 0 -9.81"/>
+
+  <worldbody>
+    <light diffuse=".5 .5 .5" pos="0 0 3" dir="0 0 -1"/>
+    <geom type="plane" size="5 5 0.1" rgba=".9 .9 .9 1"/>
+
+    <body name="robot_1" pos="-1 0 0.5">
+      <joint name="r1_base_rotate" type="hinge" axis="0 0 1"/>
+      <geom type="cylinder" size="0.1 0.25" rgba="0.2 0.5 0.8 1"/>
+      <body name="r1_link1" pos="0 0 0.5">
+        <joint name="r1_shoulder" type="hinge" axis="0 1 0"/>
+        <geom type="capsule" size="0.06" fromto="0 0 0 0 0 0.4" rgba="0.3 0.6 0.9 1"/>
+        <body name="r1_link2" pos="0 0 0.4">
+          <joint name="r1_elbow" type="hinge" axis="0 1 0"/>
+          <geom type="capsule" size="0.05" fromto="0 0 0 0 0 0.3" rgba="0.4 0.7 1.0 1"/>
+          <body name="r1_end_effector" pos="0 0 0.3">
+            <joint name="r1_wrist" type="hinge" axis="0 1 0"/>
+            <geom type="sphere" size="0.04" rgba="1 0.3 0.3 1"/>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+</mujoco>
